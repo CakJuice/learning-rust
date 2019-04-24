@@ -1,15 +1,11 @@
-extern crate dotenv;
-extern crate argon2;
-extern crate chrono;
-
 use dotenv::dotenv;
 use std::env;
 // use chrono::{Utc, DateTime};
-use libs::models::BaseModel;
 
 #[derive(Debug)]
 pub struct User {
-    base: BaseModel,
+    // base: BaseModel,
+    id: i32,
     username: String,
     email: String,
     password: String,
@@ -18,7 +14,8 @@ pub struct User {
 impl User {
     pub fn new(id: i32, username: String, email: String, password: String) -> User {
         User {
-            base: BaseModel::new(id),
+            // base: BaseModel::new(id),
+            id,
             username,
             email,
             password: User::hashing_password(&password),

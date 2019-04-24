@@ -1,5 +1,4 @@
 mod libs;
-use libs;
 
 mod modules;
 use modules::base::models::User;
