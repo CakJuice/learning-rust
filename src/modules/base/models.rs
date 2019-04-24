@@ -4,25 +4,24 @@ extern crate chrono;
 
 use dotenv::dotenv;
 use std::env;
-use chrono::{Utc, DateTime};
+// use chrono::{Utc, DateTime};
+use libs::models::BaseModel;
 
 #[derive(Debug)]
 pub struct User {
+    base: BaseModel,
     username: String,
     email: String,
     password: String,
-    created_at: DateTime<Utc>,
-    updated_at: DateTime<Utc>,
 }
 
 impl User {
-    pub fn new(username: String, email: String, password: String) -> User {
+    pub fn new(id: i32, username: String, email: String, password: String) -> User {
         User {
+            base: BaseModel::new(id),
             username,
             email,
             password: User::hashing_password(&password),
-            created_at: Utc::now(),
-            updated_at: Utc::now(),
         }
     }
 
@@ -30,7 +29,7 @@ impl User {
         dotenv().ok();
 
         let config = argon2::Config::default();
-        let secret = env::var("SECRET").unwrap();
+        let secret = env::var("SECRET").expect("'Secret Key' must be set!");
         argon2::hash_encoded(password.as_bytes(), secret.as_bytes(), &config).unwrap()
     }
 }
