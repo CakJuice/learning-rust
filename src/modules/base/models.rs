@@ -3,12 +3,20 @@ use std::env;
 // use chrono::{Utc, DateTime};
 
 #[derive(Debug)]
+enum UserType {
+    superuser,
+    officer,
+    manager,
+}
+
+#[derive(Debug)]
 pub struct User {
     // base: BaseModel,
     id: i32,
     username: String,
     email: String,
     password: String,
+    user_type: UserType,
 }
 
 impl User {
@@ -19,6 +27,7 @@ impl User {
             username,
             email,
             password: User::hashing_password(&password),
+            user_type: UserType::superuser,
         }
     }
 
